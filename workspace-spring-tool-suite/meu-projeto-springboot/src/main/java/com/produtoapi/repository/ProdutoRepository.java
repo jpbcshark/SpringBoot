@@ -12,8 +12,8 @@ public interface ProdutoRepository extends JpaRepository<Produto, Long> {
 	List<Produto> findByNomeAndStatus(String nome, String status);
 	List<Produto> findByNomeStartingWith(String prefix);
 	List<Produto> findByNomeEndingWith (String suffix);
-	// Busca por preço
 	
+	/* Buscas por preço*/
 	List<Produto> findByPreco(Double preco);
 	List<Produto> findByPrecoGreaterThan(Double preco);
 	List<Produto> findByPrecoLessThan(Double preco);
@@ -21,4 +21,14 @@ public interface ProdutoRepository extends JpaRepository<Produto, Long> {
 	// Usando anottation @Query para obter total de preços
 	@Query("SELECT SUM(p.preco) FROM Produto p")
 	Double findTotalPreco();
+	
+	//Buscas por quantidade
+	List<Produto> findByQuantidade(Integer quantidade);
+	List<Produto> findByQuantidadeLessThan(Integer quantidade);
+	List<Produto> findByQuantidadeGreaterThan(Integer quantidade);
+	
+	// Buscas por preço e status 
+	List<Produto> findByStatus(String status);
+	List<Produto> findByStatusIsNull();
+	List<Produto> findByPrecoAndStatus(Double preco, String status);
 }

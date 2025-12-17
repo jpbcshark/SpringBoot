@@ -81,16 +81,68 @@ public class ProdutoController {
 	  public List<Produto> buscarPorPreco(@RequestParam Double valor) {
 	      return produtoService.findByPreco(valor);
 	  }
+	  
 	  @GetMapping("/buscarPorPrecoMaiorQue")
 	  public List<Produto> buscarPorPrecoMaiorQue(@RequestParam Double valor) {
 	      return produtoService.findByPrecoGreaterThan(valor);
 	  }
+	  
 	  @GetMapping("/buscarPorPrecoMenorQue")
 	  public List<Produto> buscarPorPrecoMenorQue(@RequestParam Double valor) {
 	      return produtoService.findByPrecoLessThan(valor);
 	  }
+	  
 	  @GetMapping("/buscarTotalPreco")
 	  public Double buscarTotalPreco() {
 	      return produtoService.findTotalPreco();
 	  }
+	  
+	// ============================================================================== // ================ BUSCAS DETALHADAS POR QUANTIDADE DE PRODUTO ================= // ==============================================================================
+	  @GetMapping("/buscarPorQuantidade")
+	  public List<Produto> buscarPorQuantidade(@RequestParam Integer valor) {
+		  return produtoService.findByQuantidade(valor);
+	  }
+	  
+	  @GetMapping("/buscarPorQuantidadeMenorQue")
+	  public List<Produto> buscarPorQuantidadeMenorQue(@RequestParam Integer valor) {
+		  return produtoService.findByQuantidadeLessThan(valor);
+	  }
+	  
+	  @GetMapping("/buscarPorQuantidadeMaiorQue")
+	  public List<Produto> buscarPorQuantidadeMaiorQue(@RequestParam Integer valor) {
+		  return produtoService.findByQuantidadeGreaterThan(valor);
+	  }
+	  
+	  //==============================================================================
+	  // =================== BUSCAS DETALHADAS POR STATUS DE PRODUTO==================
+	  //==============================================================================
+
+	  @GetMapping("/buscarPorStatus")
+	  public List<Produto> buscarPorStatus(@RequestParam(required = false) String valor) {
+	  return produtoService.findByStatus(valor);
+	  }
+
+	  // Retorna exclusivamente produtos com status null
+	  @GetMapping("/buscarPorStatusNulos")
+	  public List<Produto> buscarPorStatusNulos() {
+		  return produtoService.findByStatusIsNull();
+	  }
+
+	  // Busca baseada em dois campos (preço e status)
+	  @GetMapping("/buscarPorPrecoEStatus")
+	  public List<Produto> buscarPorPrecoEStatus(@RequestParam Double preco, @RequestParam String status) {
+	  return produtoService.findByPrecoAndStatus(preco, status);
+	  }
+
+	  // Endpoint para trazer o total de produtos
+	  @GetMapping("/contarTotalDeProdutos") public Long contarTotalDeProdutos() {
+	  return produtoService.count();
+	  }
+
+	  // Se não passar nada, volta todos produtos com status padrão, neste caso será "Disponível".
+	  @GetMapping("/buscarPorStatusPadrao")
+	  public List<Produto> buscarPorStatusPadrao(@RequestParam(defaultValue = "Disponível") String valor) {
+	  return produtoService.findByStatus(valor);
+	  }
+
 }
